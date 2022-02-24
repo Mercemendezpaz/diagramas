@@ -1,0 +1,163 @@
+CREATE TABLE Colecciones
+(
+  Clave_Principal INT NOT NULL,
+  Nombre INT NOT NULL,
+  Cantidad_de_elementos INT NOT NULL,
+  Institucion_Mayor INT NOT NULL,
+  PRIMARY KEY (Clave_Principal)
+);
+
+CREATE TABLE Elementos
+(
+  Clave_Principal INT NOT NULL,
+  Titulo INT NOT NULL,
+  URL INT NOT NULL,
+  URI INT NOT NULL,
+  Soporte INT NOT NULL,
+  Existencias INT NOT NULL,
+  Estado_de_Prestamo INT NOT NULL,
+  PRIMARY KEY (Clave_Principal)
+);
+
+CREATE TABLE Soporte
+(
+  Clave_Principal INT NOT NULL,
+  Tipo INT NOT NULL,
+  PRIMARY KEY (Clave_Principal)
+);
+
+CREATE TABLE Formato
+(
+  Clave_Principal INT NOT NULL,
+  Tipo INT NOT NULL,
+  PRIMARY KEY (Clave_Principal)
+);
+
+CREATE TABLE Autores
+(
+  Clave_Principal INT NOT NULL,
+  Fechas_Realcionadas INT NOT NULL,
+  PRIMARY KEY (Clave_Principal)
+);
+
+CREATE TABLE Tipo_de_Usuario
+(
+  Clave_Principal INT NOT NULL,
+  Tipo_de_usuario INT NOT NULL,
+  PRIMARY KEY (Clave_Principal)
+);
+
+CREATE TABLE Materia
+(
+  Clave_Principal INT NOT NULL,
+  materia INT NOT NULL,
+  Palabras_clave INT NOT NULL,
+  PRIMARY KEY (Clave_Principal),
+  UNIQUE (Palabras_clave)
+);
+
+CREATE TABLE Tiene
+(
+  Clave_Principal INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Clave_Principal, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Colecciones(Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Elementos(Clave_Principal)
+);
+
+CREATE TABLE Tiene
+(
+  Clave_Principal INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Clave_Principal, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Elementos(Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Soporte(Clave_Principal)
+);
+
+CREATE TABLE Tiene
+(
+  Clave_Principal INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Clave_Principal, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Elementos(Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Formato(Clave_Principal)
+);
+
+CREATE TABLE Tiene
+(
+  Clave_Principal INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Clave_Principal, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Elementos(Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Autores(Clave_Principal)
+);
+
+CREATE TABLE Relationship
+(
+  Clave_Principal INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Clave_Principal, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Elementos(Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Materia(Clave_Principal)
+);
+
+CREATE TABLE Elementos_materia
+(
+  materia INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (materia, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Elementos(Clave_Principal)
+);
+
+CREATE TABLE Autores_Nombre
+(
+  Nombre INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Nombre, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Autores(Clave_Principal)
+);
+
+CREATE TABLE Usuario
+(
+  Clave_Principal INT NOT NULL,
+  Nombre INT NOT NULL,
+  Reservas INT NOT NULL,
+  Mail INT NOT NULL,
+  Direccion INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Tipo_de_Usuario(Clave_Principal)
+);
+
+CREATE TABLE Consulta
+(
+  Clave_Principal INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Clave_Principal, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Elementos(Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Usuario(Clave_Principal)
+);
+
+CREATE TABLE Usuario_Elementos_en_prestamo
+(
+  Elementos_en_prestamo INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Elementos_en_prestamo, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Usuario(Clave_Principal)
+);
+
+CREATE TABLE Usuario_Elementos_consultados
+(
+  Elementos_consultados INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Elementos_consultados, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Usuario(Clave_Principal)
+);
+
+CREATE TABLE Usuario_Telefono
+(
+  Telefono INT NOT NULL,
+  Clave_Principal INT NOT NULL,
+  PRIMARY KEY (Telefono, Clave_Principal),
+  FOREIGN KEY (Clave_Principal) REFERENCES Usuario(Clave_Principal)
+);
